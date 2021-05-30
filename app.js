@@ -14,34 +14,43 @@ const game = ()=>{
       })
   }
   const playMatch = ()=>{
+    // fetching the option buttons for player choice
       const options = document.querySelectorAll('.options button');
+      // this is player hand 
       const playerHand = document.querySelector('.player-hand');
+      // this is computer hand
       const computerHand= document.querySelector('.computer-hand')
       //computer options
       const computerOptions = ['rock','paper','scissors']
-      const hands = document.querySelector('.hands img');
-      hands.forEach(hand=>{
+        const hands = document.querySelectorAll('.hands img');
+       
+        // As everytime player runs the animation gets updated , animation runs in background to stop 
+        //that we need to run this 
+       hands.forEach(hand=>{
         hand.addEventListener('animationend',function(){
            this.style.animation='';
         })
       })
-    
+      
+    // if user presses any of buttons(rock, paper and scissors)
       options.forEach(option=>{
         option.addEventListener('click',function(){
             console.log(this);
+           
             const computerNumber=Math.floor(Math.random() * 3);
             const computerChoice = computerOptions[computerNumber]
             //here is we call compare Hands'
             compareHands(this.textContent,computerChoice)
-            //Update Images
+            //Update Images after 1s not immediately when the animation ends
             setTimeout(()=>{
               playerHand.src=`./assets/${this.textContent}.png`
               computerHand.src=`./assets/${computerChoice}.png`
-            },2000)
-            
-
+            },1000)
+            // setting the animation 
             playerHand.style.animation = 'shakePlayer 1s ease';
             computerHand.style.animation='shakeComputer 1s ease'
+
+           
 
             // calling updateScore
             updateScore();
